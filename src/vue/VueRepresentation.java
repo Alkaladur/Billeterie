@@ -40,10 +40,11 @@ public class VueRepresentation extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButtonCommander = new javax.swing.JButton();
         jButtonRetour = new javax.swing.JButton();
+        jButtonUpdate = new javax.swing.JButton();
 
         jTextField1.setText("jTextField1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         jLabel1.setText("Representation");
 
@@ -54,7 +55,15 @@ public class VueRepresentation extends javax.swing.JFrame {
             new String [] {
                 "Groupe"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -90,6 +99,14 @@ public class VueRepresentation extends javax.swing.JFrame {
 
         jButtonRetour.setText("Retour");
 
+        jButtonUpdate.setText("Push");
+        jButtonUpdate.setEnabled(false);
+        jButtonUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonUpdateActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -107,6 +124,8 @@ public class VueRepresentation extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButtonCommander)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonUpdate)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButtonRetour))
                             .addGroup(layout.createSequentialGroup()
@@ -126,12 +145,18 @@ public class VueRepresentation extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCommander)
-                    .addComponent(jButtonRetour))
+                    .addComponent(jButtonRetour)
+                    .addComponent(jButtonUpdate))
                 .addContainerGap())
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonUpdateActionPerformed
 
     public JTable getjTable1() {
         return jTable1;
@@ -148,11 +173,7 @@ public class VueRepresentation extends javax.swing.JFrame {
     public JLabel getjLabel3() {
         return jLabel3;
     }
-    
-    
-    
 
-    
     /**
      * @param args the command line arguments
      */
@@ -187,20 +208,25 @@ public class VueRepresentation extends javax.swing.JFrame {
                 new VueRepresentation().setVisible(true);
             }
         });
-        
+
     }
+
     public JButton getJButtonCommander() {
         return jButtonCommander;
     }
-    
+
     public JButton getJButtonRetour() {
         return jButtonRetour;
     }
-    
+
+    public JButton getJButtonUpdate() {
+        return jButtonUpdate;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCommander;
     private javax.swing.JButton jButtonRetour;
+    private javax.swing.JButton jButtonUpdate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -209,4 +235,5 @@ public class VueRepresentation extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
 }

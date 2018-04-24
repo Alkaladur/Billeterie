@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import modele.dao.Jdbc;
+import modele.dao.JdbcLocal;
 import modele.dao.DaoRepresentation;
 import modele.metier.Representation;
 
@@ -21,8 +21,8 @@ import modele.metier.Representation;
 public class testRepresentation {
     public static void main(String args[]){
         try {
-            Jdbc.creer("com.mysql.jdbc.Driver", "jdbc:mysql:", "//localhost/", "festival", "root", "joliverie");
-            Jdbc.getInstance().connecter();
+            JdbcLocal.creer("com.mysql.jdbc.Driver", "jdbc:mysql:", "//localhost/", "festival", "root", "joliverie");
+            JdbcLocal.getInstance().connecter();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(testDaoRepresentation.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {

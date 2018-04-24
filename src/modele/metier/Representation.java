@@ -6,8 +6,7 @@
 package modele.metier;
 
 /**
- *
- * @author wquentel
+ * Class for representation.
  */
 public class Representation {
     private int id;
@@ -22,7 +21,18 @@ public class Representation {
         
     
     
-    //constructeur
+    /**
+     * Constructs the object.
+     *
+     * @param      id           The identifier
+     * @param      date         The date
+     * @param      Lieu         The lieu
+     * @param      Groupe       The groupe
+     * @param      heureDebut   The heure debut
+     * @param      heureFin     The heure fin
+     * @param      placesDispo  The places dispo
+     * @param      placesTotal  The places total
+     */
     public Representation(int id,String date,String Lieu,String Groupe,String heureDebut,String heureFin,int placesDispo, int placesTotal){
     
     this.id=id;
@@ -35,40 +45,77 @@ public class Representation {
     this.placesTotal=placesTotal;
     }
 
-    //toString
+    /**
+     * Returns a string representation of the object.
+     *
+     * @return     String representation of the object.
+     */
     @Override
     public String toString() {
         return "<html>Groupe=" + groupe +"<br> date=" + date + "<br> Lieu=" + lieux + "<br> heureDebut=" + heureD + "<br> heureFin=" + heureF + "<br> placesDispo=" + placesDispo + "/"+placesTotal+"</html>";
     }
-
+    /**
+     * Gets the places dispo.
+     *
+     * @return     The places dispo.
+     */
     public int getPlacesDispo() {
         return placesDispo;
     }
-
+    /**
+     * Sets the places dispo.
+     *
+     * @param      placesDispo  The places dispo
+     */
     public void setPlacesDispo(int placesDispo) {
         this.placesDispo = placesDispo;
     }
     
-    //accesseur
+    /**
+     * Gets the identifier.
+     *
+     * @return     The identifier.
+     */
     public int getId(){
         return id;
     }
+    /**
+     * Gets the date.
+     *
+     * @return     The date.
+     */
     public String getDate() {
         return date;
     }
-
+    /**
+     * Gets the lieu.
+     *
+     * @return     The lieu.
+     */
     public String getLieu() {
         return lieux;
     }
-
+    /**
+     * Gets the groupe.
+     *
+     * @return     The groupe.
+     */
     public String getGroupe() {
         return groupe;
     }
-
+    /**
+     * Gets the heure debut.
+     *
+     * @return     The heure debut.
+     */
     public String getHeureDebut() {
         return heureD;
     }
-
+    /**
+     * Gets the heure fin.
+     *
+     * @return     The heure fin.
+     */
     public String getHeureFin() {
         return heureF;
     }

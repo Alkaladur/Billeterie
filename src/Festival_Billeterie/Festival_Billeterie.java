@@ -5,7 +5,8 @@
  */
 package Festival_Billeterie;
 
-import controleur.CtrlConnection;
+import controleur.CtrlConnectionDistante;
+import controleur.CtrlConnectionLocale;
 import controleur.CtrlPrincipal;
 import controleur.CtrlRepresentation;
 import controleur.CtrlLeMenu;
@@ -19,67 +20,73 @@ import javax.swing.JOptionPane;
 import vue.VueRepresentation;
 import vue.VueMenu;
 import vue.VueBilleterie;
-import vue.VueConnection;
-import modele.dao.Jdbc;
-
+import vue.VueConnectionLocale;
+import modele.dao.JdbcLocal;
+import vue.VueConnectionDistante;
 
 /**
- *
- * @author aroblin
+ * Class for festival billeterie as know as main
  */
 public class Festival_Billeterie {
+
     public static void main(String[] args) {
-         Properties prop = new Properties();
-	InputStream input = null;
-
-	try {
-
-		input = new FileInputStream("src/properties/config.properties");
-
-		// load a properties file
-		prop.load(input);
-
-	} catch (IOException ex) {
-		ex.printStackTrace();
-	} finally {
-		if (input != null) {
-			try {
-				input.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-        Jdbc.creer(prop.getProperty("jdbcDriver"), prop.getProperty("typeBdd"), prop.getProperty("localisation"), prop.getProperty("database"), prop.getProperty("dbuser"), prop.getProperty("dbpassword"));
+        Properties prop = new Properties();
+        InputStream input = null;
+        
+        // Get the lines in config.properties to be able to connect to the local dataBase
         try {
-            Jdbc.getInstance().connecter();
+
+            input = new FileInputStream("properties/config.properties");
+
+            // load a properties file
+            prop.load(input);
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        JdbcLocal.creer(prop.getProperty("jdbcDriver"), prop.getProperty("typeBdd"), prop.getProperty("localisation"), prop.getProperty("database"), prop.getProperty("dbuser"), prop.getProperty("dbpassword"));
+        try {
+            //instanciation de tout les controleurs et connection à la base locale
+            JdbcLocal.getInstance().connecter();
             CtrlPrincipal leControleurPrincipal = new CtrlPrincipal();
-            
-            VueConnection laVueLaConnection= new VueConnection();
-            CtrlConnection leControleurLaConnection= new CtrlConnection(laVueLaConnection, leControleurPrincipal);
-            
+
+            VueConnectionLocale laVueLaConnectionLocale = new VueConnectionLocale();
+            CtrlConnectionLocale leControleurLaConnectionLocale = new CtrlConnectionLocale(laVueLaConnectionLocale, leControleurPrincipal);
+
+            VueConnectionDistante laVueLaConnectionDistante=new VueConnectionDistante();
+            CtrlConnectionDistante leControleurLaConnectionDistante = new CtrlConnectionDistante(laVueLaConnectionDistante, leControleurPrincipal);
+
             VueMenu laVueLeMenu = new VueMenu();
             CtrlLeMenu leControleurLeMenu = new CtrlLeMenu(laVueLeMenu, leControleurPrincipal);
-            
-            VueRepresentation laVueLesRepresentation = new VueRepresentation();            
+
+            VueRepresentation laVueLesRepresentation = new VueRepresentation();
             CtrlRepresentation leControleurLesRepresentation = new CtrlRepresentation(laVueLesRepresentation, leControleurPrincipal);
-            
-            VueBilleterie laVueLaBilleterie= new VueBilleterie();
+
+            VueBilleterie laVueLaBilleterie = new VueBilleterie();
             CtrlLaBilleterie leControleurLaBilleterie = new CtrlLaBilleterie(laVueLaBilleterie, leControleurPrincipal);
-            
-            leControleurPrincipal.setCtrlLaConnection(leControleurLaConnection);
+
+            leControleurPrincipal.setCtrlLaConnectionLocale(leControleurLaConnectionLocale);
+            leControleurPrincipal.setCtrlLaConnectionDistante(leControleurLaConnectionDistante);
             leControleurPrincipal.setCtrlLaBilleterie(leControleurLaBilleterie);
-            leControleurPrincipal.setCtrlRepresentation(leControleurLesRepresentation);            
+            leControleurPrincipal.setCtrlRepresentation(leControleurLesRepresentation);
             leControleurPrincipal.setCtrlMenu(leControleurLeMenu);
             leControleurPrincipal.setCtrlLaBilleterie(leControleurLaBilleterie);
-            
-            laVueLaConnection.setVisible(true);
+
+            laVueLaConnectionLocale.setVisible(true);
         } catch (ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "Main - classe JDBC non trouvée");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Main - échec de connexion");
+            JOptionPane.showMessageDialog(null, "Main - échec de connexion " + ex.getMessage());
         }
-        
+
     }
-    
+
 }

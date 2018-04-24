@@ -47,7 +47,8 @@ public class VueBilleterie extends javax.swing.JFrame {
 
         jTextField1.setText("jTextField1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setText("Representation");
 
@@ -58,7 +59,15 @@ public class VueBilleterie extends javax.swing.JFrame {
             new String [] {
                 "Groupe"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -93,7 +102,6 @@ public class VueBilleterie extends javax.swing.JFrame {
         jLabel4.setText("Nombre de place :");
 
         jButtonCommander.setText("Commander");
-        jButtonCommander.setActionCommand("Commander");
 
         jButtonRetour.setText("Retour");
 
@@ -151,6 +159,7 @@ public class VueBilleterie extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     public JTable getjTable1() {

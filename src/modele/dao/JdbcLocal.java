@@ -8,10 +8,10 @@ import java.sql.*;
  * @author nbourgeois
  * @version 2 22 novembre 2013
  */
-public class Jdbc {
+public class JdbcLocal {
 
-    // Instance du singleton Jdbc
-    private static Jdbc singleton = null;
+    // Instance du singleton JdbcLocal
+    private static JdbcLocal singleton = null;
     // Paramètre de la connexion
     private String piloteJdbc = "";
     private String protocoleJdbc = "";
@@ -22,7 +22,7 @@ public class Jdbc {
     // Connexion
     private Connection connexion = null; // java.sql.Connection
 
-    private Jdbc() {
+    private JdbcLocal() {
     }
 
     /**
@@ -34,7 +34,7 @@ public class Jdbc {
      * @param login : utilisateur autorisé du SGBD (ou schéma Oracle)
      * @param mdp : son mot de passe
      */
-    private Jdbc(String pilote, String protocole, String serveur, String base, String login, String mdp) {
+    private JdbcLocal(String pilote, String protocole, String serveur, String base, String login, String mdp) {
         this.piloteJdbc = pilote;
         this.protocoleJdbc = protocole;
         this.serveurBd = serveur;
@@ -43,14 +43,14 @@ public class Jdbc {
         this.mdpSgbd = mdp;
     }
 
-    public static Jdbc creer(String pilote, String protocole, String serveur, String base, String login, String mdp) {
+    public static JdbcLocal creer(String pilote, String protocole, String serveur, String base, String login, String mdp) {
         if (singleton == null) {
-            singleton = new Jdbc(pilote, protocole, serveur, base, login, mdp);
+            singleton = new JdbcLocal(pilote, protocole, serveur, base, login, mdp);
         }
         return singleton;
     }
 
-    public static Jdbc getInstance() {
+    public static JdbcLocal getInstance() {
         return singleton;
     }
 

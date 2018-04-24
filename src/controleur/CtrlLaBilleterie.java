@@ -13,12 +13,14 @@ import modele.dao.DaoRepresentation;
 import modele.metier.Representation;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.IOException;
 import static java.lang.Integer.parseInt;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.EventObject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
@@ -30,17 +32,17 @@ import vue.VueBilleterie;
 
 
 /**
- *
- * @author wquentel
+ * Class for control la billeterie.
  */
 public class CtrlLaBilleterie implements WindowListener,MouseListener,ActionListener{
     private vue.VueBilleterie billeterie;
     private ArrayList<Representation> lesRepresentations;
     private CtrlPrincipal ctrlPrincipal;
-    int nbPlaceDispo;
-    int idRepresentation;
-    String nomGroupe;
-    Boolean concertDispo;
+    private int nbPlaceDispo;
+    private int idRepresentation;
+    private String nomGroupe;
+    private Boolean concertDispo;
+    
     public CtrlLaBilleterie(vue.VueBilleterie vue, CtrlPrincipal ctrl){
         this.billeterie=vue;
         this.billeterie.addWindowListener(this);
@@ -51,10 +53,13 @@ public class CtrlLaBilleterie implements WindowListener,MouseListener,ActionList
         billeterie.getJButtonRetour().addActionListener(this);
         billeterie.getJButtonCommander().setEnabled(false);
     }
-    
+    /**
+     * Display the band list and on click on one of them display the whole
+     * information such as where they gonna play, date, time and how much ticket left
+     */
     private void afficheLesReserv() {
         try {
-            lesRepresentations= (ArrayList<Representation>) DaoRepresentation.selectAll();
+            lesRepresentations= (ArrayList<Representation>) DaoRepresentation.selectAll(true);
         } catch (SQLException ex) {
             Logger.getLogger(CtrlRepresentation.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -67,9 +72,30 @@ public class CtrlLaBilleterie implements WindowListener,MouseListener,ActionList
         
         this.billeterie.setjTable1(jtable1);
     }
-    
+    private void afficheLesReserv(boolean active) {
+        try {
+            lesRepresentations= (ArrayList<Representation>) DaoRepresentation.selectAll(active);
+        } catch (SQLException ex) {
+            Logger.getLogger(CtrlRepresentation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        JTable jtable1 = this.billeterie.getjTable1();
+        DefaultTableModel model = (DefaultTableModel) jtable1.getModel();
+        
+        for (Representation uneRepresentation : lesRepresentations){
+            model.addRow(new Object[]{uneRepresentation.getGroupe()});
+        }
+        
+        this.billeterie.setjTable1(jtable1);
+    }
+    /**
+     * When you try to order ticket and  performe an action on the JButtonCommander
+     * check if there is enough ticket left and if the number of tickets is a number or above 0 
+     *
+     * @param      e     
+     */
     public void actionPerformed(ActionEvent e) {
         int nbPlace = 0;
+        boolean active =ctrlPrincipal.getConnection();
         if (e.getSource() == billeterie.getJButtonCommander()) {
             try{
                 nbPlace = Integer.parseInt(billeterie.getJTextFieldNbPlace().getText());
@@ -91,20 +117,22 @@ public class CtrlLaBilleterie implements WindowListener,MouseListener,ActionList
                     billeterie.getjLabelCommande().setText("Commande de "+nbPlace+" place(s)");
                 } catch (SQLException ex) {
                     Logger.getLogger(CtrlLaBilleterie.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(CtrlLaBilleterie.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
                 int row = billeterie.getjTable1().getSelectedRow();
                 String groupeChoisis = (String) billeterie.getjTable1().getValueAt(row, 0);
                 String groupeChoisisRes = null;
                 try {
-                    groupeChoisisRes = DaoRepresentation.selectRepresentationParGroupe(groupeChoisis).toString();
+                    groupeChoisisRes = DaoRepresentation.selectRepresentationParGroupe(groupeChoisis,active).toString();
                 } catch (SQLException ex) {
                     Logger.getLogger(CtrlRepresentation.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 try {
                     Date currentTime = new Date();
-                    String dateDebut = DaoRepresentation.selectRepresentationParGroupe(groupeChoisis).getDate();
-                    String heureDebut = DaoRepresentation.selectRepresentationParGroupe(groupeChoisis).getHeureDebut();
+                    String dateDebut = DaoRepresentation.selectRepresentationParGroupe(groupeChoisis,active).getDate();
+                    String heureDebut = DaoRepresentation.selectRepresentationParGroupe(groupeChoisis,active).getHeureDebut();
                     int annee = Integer.parseInt(dateDebut.substring(0,4));
                     int mois = Integer.parseInt(dateDebut.substring(5,7));
                     int jour = Integer.parseInt(dateDebut.substring(8,10));
@@ -124,6 +152,7 @@ public class CtrlLaBilleterie implements WindowListener,MouseListener,ActionList
         }
         if (e.getSource() == billeterie.getJButtonRetour()) {
              ctrlPrincipal.afficherLeMenu() ;
+             billeterie.getjLabelCommande().setText("");
         }
     }
     
@@ -157,21 +186,27 @@ public class CtrlLaBilleterie implements WindowListener,MouseListener,ActionList
     @Override
     public void windowDeactivated(WindowEvent e) {
     }
-
+    /**
+     * Display the list of band
+     *
+     * @param      e     onClick on the list
+     */
     public void mouseClicked(MouseEvent e) {
+        boolean active =ctrlPrincipal.getConnection();
         int row = billeterie.getjTable1().getSelectedRow();
         String groupeChoisis = (String) billeterie.getjTable1().getValueAt(row, 0);
         String groupeChoisisRes = null;
         nomGroupe=groupeChoisis;
+        billeterie.getjLabelCommande().setText("");
         try {
-            groupeChoisisRes = DaoRepresentation.selectRepresentationParGroupe(groupeChoisis).toString();
+            groupeChoisisRes = DaoRepresentation.selectRepresentationParGroupe(groupeChoisis,active).toString();
         } catch (SQLException ex) {
             Logger.getLogger(CtrlRepresentation.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
             Date currentTime = new Date();
-            String dateDebut = DaoRepresentation.selectRepresentationParGroupe(groupeChoisis).getDate();
-            String heureDebut = DaoRepresentation.selectRepresentationParGroupe(groupeChoisis).getHeureDebut();
+            String dateDebut = DaoRepresentation.selectRepresentationParGroupe(groupeChoisis,active).getDate();
+            String heureDebut = DaoRepresentation.selectRepresentationParGroupe(groupeChoisis,active).getHeureDebut();
             int annee = Integer.parseInt(dateDebut.substring(0,4));
             int mois = Integer.parseInt(dateDebut.substring(5,7));
             int jour = Integer.parseInt(dateDebut.substring(8,10));
@@ -182,8 +217,8 @@ public class CtrlLaBilleterie implements WindowListener,MouseListener,ActionList
             System.out.println(annee + " " +mois + " " +jour);
             System.out.println(currentTime);
             System.out.println(dateConcert);
-            idRepresentation=DaoRepresentation.selectRepresentationParGroupe(groupeChoisis).getId();
-            nbPlaceDispo=DaoRepresentation.selectRepresentationParGroupe(groupeChoisis).getPlacesDispo();
+            idRepresentation=DaoRepresentation.selectRepresentationParGroupe(groupeChoisis,active).getId();
+            nbPlaceDispo=DaoRepresentation.selectRepresentationParGroupe(groupeChoisis,active).getPlacesDispo();
             concertDispo=dateConcert.before(currentTime);
             
             if(nbPlaceDispo==0 && concertDispo){

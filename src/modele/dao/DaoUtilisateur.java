@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package modele.dao;
-import controleur.CtrlConnection;
+import controleur.CtrlConnectionLocale;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.PreparedStatement;
@@ -14,18 +14,25 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import modele.metier.Utilisateur;
 /**
- *
- * @author wquentel
+ * Class for dao utilisateur.
  */
-
 public class DaoUtilisateur {
-    public static boolean verifConnection(Utilisateur lUtilisateur) throws SQLException{
+    /**
+     * { function_description }
+     *
+     * @param      lUtilisateur  Login of the database
+     *
+     * @return     trouve Boolean return true if the login and the password are found in the database
+     *
+     * @throws     SQLException  
+     */
+    public static boolean verifConnection(Utilisateur lUtilisateur, boolean activeDtb) throws SQLException{
         boolean trouve=false;
         String identifiant= lUtilisateur.getIdentifiant();
         String mdp=lUtilisateur.getMdp();
         ResultSet rs;
         PreparedStatement pstmt;
-        Jdbc jdbc = Jdbc.getInstance();
+        JdbcLocal jdbc = JdbcLocal.getInstance();
         String requete = "SELECT * FROM Utilisateur WHERE identifiant LIKE '"+identifiant+"' AND mdp='"+mdp+"';";
         pstmt = jdbc.getConnexion().prepareStatement(requete);
         rs = pstmt.executeQuery();

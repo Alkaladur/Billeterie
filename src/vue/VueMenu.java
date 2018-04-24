@@ -4,17 +4,22 @@
  * and open the template in the editor.
  */
 package vue;
+
 import controleur.CtrlPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
+
 /**
  *
  * @author wquentel
  */
-public class VueMenu extends javax.swing.JFrame{
-    private VueMenu vueMenu= this;
+public class VueMenu extends javax.swing.JFrame {
+
+    private VueMenu vueMenu = this;
+
     /**
      * Creates new form VueMenu1
      */
@@ -31,11 +36,17 @@ public class VueMenu extends javax.swing.JFrame{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jBoutonBilleterie = new javax.swing.JButton();
         jBoutonRepresentation = new javax.swing.JButton();
+        jButtonDeconnection = new javax.swing.JButton();
+        jRadioButtonLocale = new javax.swing.JRadioButton();
+        jRadioButtonDistance = new javax.swing.JRadioButton();
+        jButtonSynchronisation = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         jLabel1.setText("Menu Festival");
 
@@ -48,39 +59,89 @@ public class VueMenu extends javax.swing.JFrame{
             }
         });
 
+        jButtonDeconnection.setText("Déconnection");
+
+        buttonGroup1.add(jRadioButtonLocale);
+        jRadioButtonLocale.setText("Locale");
+        jRadioButtonLocale.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonLocaleActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(jRadioButtonDistance);
+        jRadioButtonDistance.setText("Distante");
+
+        jButtonSynchronisation.setText("Synchronisation");
+        jButtonSynchronisation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSynchronisationActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Local to Distant");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jBoutonBilleterie)
-                    .addComponent(jLabel1))
-                .addGap(160, 160, 160))
             .addGroup(layout.createSequentialGroup()
-                .addGap(118, 118, 118)
-                .addComponent(jBoutonRepresentation)
-                .addContainerGap(137, Short.MAX_VALUE))
+                .addGap(60, 60, 60)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jBoutonBilleterie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jBoutonRepresentation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jRadioButtonDistance)
+                            .addGap(0, 0, 0)
+                            .addComponent(jRadioButtonLocale))
+                        .addComponent(jButtonDeconnection, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addGap(30, 30, 30))
+                        .addComponent(jButtonSynchronisation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addComponent(jLabel1)
                 .addGap(50, 50, 50)
                 .addComponent(jBoutonBilleterie)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(6, 6, 6)
                 .addComponent(jBoutonRepresentation)
-                .addContainerGap(167, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jRadioButtonDistance)
+                    .addComponent(jRadioButtonLocale))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonSynchronisation)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonDeconnection)
+                .addContainerGap())
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBoutonRepresentationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBoutonRepresentationActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jBoutonRepresentationActionPerformed
+
+    private void jRadioButtonLocaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonLocaleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButtonLocaleActionPerformed
+
+    private void jButtonSynchronisationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSynchronisationActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonSynchronisationActionPerformed
 
     /**
      * @param args the command line arguments
@@ -115,6 +176,7 @@ public class VueMenu extends javax.swing.JFrame{
                 new VueMenu().setVisible(true);
             }
         });
+        
     }
 
     public JButton getjBoutonBilleterie() {
@@ -125,11 +187,38 @@ public class VueMenu extends javax.swing.JFrame{
         return jBoutonRepresentation;
     }
 
+    public JButton getjButtonDeconnection() {
+        return jButtonDeconnection;
+    }
+    public JRadioButton getjRadioButtonDistance() {
+        return jRadioButtonDistance;
+    }
+
+    public JRadioButton getjRadioButtonLocale() {
+        return jRadioButtonLocale;
+    }
+    public void setJRationButtonLocale(){
+        this.jRadioButtonLocale.setSelected(true);
+    }
+    public JButton getJButtonSynchronisation(){
+        return jButtonSynchronisation;
+    }
+    public void setJButtonSynchronisation(){
+        this.jButtonSynchronisation.setEnabled(false);
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jBoutonBilleterie;
     private javax.swing.JButton jBoutonRepresentation;
+    private javax.swing.JButton jButtonDeconnection;
+    private javax.swing.JButton jButtonSynchronisation;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JRadioButton jRadioButtonDistance;
+    private javax.swing.JRadioButton jRadioButtonLocale;
     // End of variables declaration//GEN-END:variables
+
+    
 }

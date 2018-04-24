@@ -9,11 +9,12 @@
     </Component>
   </NonVisualComponents>
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="defaultCloseOperation" type="int" value="0"/>
+    <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -108,7 +109,7 @@
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="1" rowCount="0">
-                <Column editable="true" title="Groupe" type="java.lang.Object"/>
+                <Column editable="false" title="Groupe" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -189,7 +190,6 @@
     <Component class="javax.swing.JButton" name="jButtonCommander">
       <Properties>
         <Property name="text" type="java.lang.String" value="Commander"/>
-        <Property name="actionCommand" type="java.lang.String" value="Commander"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonRetour">
