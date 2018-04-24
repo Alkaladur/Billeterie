@@ -106,11 +106,11 @@ public class DistantUpdater {
     public static void sqlScriptCreator() {
             executeCommand("rm properties/localDtb.sql");
             executeCommand("touch properties/localDtb.sql");
-            executeCommand("mysqldump -hlocalhost -uwquentel_festiva -pUraret98 wquentel_festival2 > properties/localDtb.sql");
+            executeCommand("mysqldump -h172.15.6.240 -uwquentel_festiva -pUraret98 wquentel_festival2 > properties/localDtb.sql");
     }
     
     public static void pushToDistant(){
-        executeCommand("mysql -h172.15.6.240 -uwquentel_festiva -pUraret98 wquentel_festival2 < properties/localDtb.sql");
-        JOptionPane.showMessageDialog(null, "Base Distante remplacée par la base locale");
+        executeCommand("mysql -hlocalhost -uwquentel_festiva -pUraret98 wquentel_festival2 < properties/localDtb.sql");
+        JOptionPane.showMessageDialog(null, "Base locale remplacée par la base distante");
     }
 }

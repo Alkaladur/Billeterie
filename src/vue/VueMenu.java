@@ -79,7 +79,7 @@ public class VueMenu extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Local to Distant");
+        jLabel2.setText("Distant to local");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
